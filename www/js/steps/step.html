@@ -1,0 +1,7 @@
+<ion-view>
+    <ion-nav-view></ion-nav-view>
+    <div ng-if="hasPreviousStep()" class="bar bar-footer bar-stable">
+        <button class="button icon-left ion-ios-arrow-left button-clear button-dark" ng-click="prev()">&nbsp;Back</button>
+        <button class="button icon-right ion-wand button-clear button-dark" ng-click="confirmRestart()">Restart&nbsp;</button>
+    </div>
+</ion-view>

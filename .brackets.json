@@ -1,0 +1,16 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/yong/dev/whoami/gulpfile.js",
+        "/home/yong/dev/whoami/hooks/before_platform_add/init_directories.js",
+        "/home/yong/dev/whoami/hooks/after_prepare/020_remove_sass_from_platforms.js",
+        "/home/yong/dev/whoami/www/js/app.js",
+        "/home/yong/dev/whoami/www/js/yesno/yesnot.controller.js",
+        "/home/yong/dev/whoami/hooks/after_prepare/010_add_platform_class.js",
+        "/home/yong/dev/whoami/hooks/after_platform_add/010_install_plugins.js",
+        "/home/yong/dev/whoami/hooks/after_plugin_add/010_register_plugin.js",
+        "/home/yong/dev/whoami/hooks/after_plugin_rm/010_deregister_plugin.js",
+        "/home/yong/dev/whoami/plugins/org.apache.cordova.device/tests/tests.js",
+        "/home/yong/dev/whoami/plugins/org.apache.cordova.device/src/windows8/DeviceProxy.js",
+        "/home/yong/dev/whoami/www/lib.bak/jquery/src/css/hiddenVisibleSelectors.js"
+    ]
+}

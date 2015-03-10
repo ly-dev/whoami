@@ -1,0 +1,22 @@
+<ion-view view-title="{{meta.title}}">
+    <ion-content>
+        <div class="card">
+            <div class="item item-divider">
+                {{meta.shortText}}
+            </div>
+            <div class="item item-text-wrap">
+                {{meta.longText}}
+                <br />
+                <br />
+
+                <div style="margin-bottom: 0.4em; text-align:center;font-weight: bold; font-size: 2.5em; color: rgb(135, 206, 235);">
+                    {{result}}
+                </div>
+                <div style="text-align:center;z-order:101;-webkit-transform: translatez(0);">
+                    <span ng-model="result" my-knob="meta.options" ng-click="next(result)" data-width="180" data-cursor=true data-thickness=".3">OK</span>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

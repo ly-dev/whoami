@@ -1,0 +1,17 @@
+<ion-view view-title="{{meta.title}}">
+    <ion-content>
+        <div class="card">
+            <div class="item item-divider">
+                {{meta.shortText}}
+            </div>
+            <div class="item item-text-wrap">
+                {{meta.longText}}
+                <br/>
+                <br/>
+            </div>
+            <div ng-repeat="optionRow in meta.options" class="button-bar">
+                <a ng-repeat="optionItem in optionRow" class="button button-stable" ng-click="next(optionItem.key)">{{optionItem.value}}</a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
