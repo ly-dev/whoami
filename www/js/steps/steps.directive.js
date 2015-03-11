@@ -31,11 +31,11 @@ angular.module('whoamiApp')
 
                     if (!angular.isUndefined(iAttributes.myKnob)) {
                         var temp = scope.$eval(iAttributes.myKnob);
-                        $log.debug('myKnob set options: ' + angular.toJson(temp));
+                        // $log.debug('myKnob set options: ' + angular.toJson(temp));
 
                         if (angular.isObject(temp)) {
                             options = angular.extend(options, temp)
-                            $log.debug('myKnob new options: ' + angular.toJson(temp));
+                            // $log.debug('myKnob new options: ' + angular.toJson(temp));
                         } else {
                             throw 'Invalid knob options attribute';
                         }
@@ -122,7 +122,7 @@ angular.module('whoamiApp')
                 };
 
             scope.$watch(iAttributes.myKnob, function () {
-                $log.debug('myKnob options changed');
+                // $log.debug('myKnob options changed');
                 render();
             }, true);
 

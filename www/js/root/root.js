@@ -13,5 +13,6 @@ angular.module('whoamiApp')
                             return mySteps.init();
                     }],
                 },
+                controller: 'RootCtrl'
             });
     });

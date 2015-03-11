@@ -15,7 +15,7 @@ angular.module('whoamiApp', [
     function ($stateProvider, $urlRouterProvider, $locationProvider, $logProvider, MY_PARAMS) {
 
         $urlRouterProvider
-            .otherwise('/step/briefing/introduction');
+            .otherwise('/briefing/introduction');
 
         $locationProvider.html5Mode(false);
 

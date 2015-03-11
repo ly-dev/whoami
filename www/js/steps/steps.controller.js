@@ -2,27 +2,6 @@
 
 angular.module('whoamiApp')
 
-.controller('StepCtrl', ['$scope', '$log', '$state', '$ionicPopup', 'MySteps',
-    function ($scope, $log, $state, $ionicPopup, mySteps) {
-        $scope.hasPreviousStep = mySteps.hasPreviousStep;
-
-        $scope.prev = mySteps.prev;
-
-        $scope.confirmRestart = function () {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Please Confirm',
-                cssClass: 'app-adjust-popup',
-                template: 'Are you sure to restart? All collected data will be reset.'
-            });
-            confirmPopup.then(function (res) {
-                if (res) {
-                    mySteps.restart();
-                }
-            });
-        };
-
-    }])
-
 .controller('BriefingCtrl', ['$scope', '$log', 'MySteps',
     function ($scope, $log, mySteps) {
         $scope.meta = mySteps.getCurrentStepTemplate();
@@ -51,4 +30,25 @@ angular.module('whoamiApp')
 
         $scope.result = $scope.meta.options.myValue;
         $scope.next = mySteps.next;
+    }])
+
+.controller('DiagnoseCtrl', ['$scope', '$log', 'MySteps',
+    function ($scope, $log, mySteps) {
+        $scope.meta = mySteps.getCurrentStepTemplate();
+        $scope.result = mySteps.getResult();
+
+        var report = mySteps.getReport();
+        if (report) {
+            if (report.action) {
+                report.action = '<ul class="diagnose-action"><li>' + report.action.replace(';', '</li><li>') + '</li></ul>';
+            }
+        }
+        $scope.report = report;
+
+        $log.debug(angular.toJson($scope.result));
+        $log.debug(angular.toJson($scope.report));
+
+        $scope.next = function () {
+            mySteps.restart();
+        };
     }]);

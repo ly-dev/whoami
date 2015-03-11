@@ -17,12 +17,27 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
 /* Customizing for Ionic */
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-/* Adjustment for Ionic */
 
+/* Adjustment for Ionic */
 .app-adjust-popup .popup-body {
     overflow: hidden;
 }
+
+ul.diagnose-action {
+    padding-left: 1em;
+    list-style-type: circle;
+}
+
+ul.diagnose-action li {
+    margin-bottom: 0.5em;
+}
+
+ul.diagnose-action li:last-child {
+    margin-bottom: 0;
+}
+

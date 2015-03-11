@@ -7594,3 +7594,13 @@ a.button {
 /* Adjustment for Ionic */
 .app-adjust-popup .popup-body {
   overflow: hidden; }
+
+ul.diagnose-action {
+  padding-left: 1em;
+  list-style-type: circle; }
+
+ul.diagnose-action li {
+  margin-bottom: 0.5em; }
+
+ul.diagnose-action li:last-child {
+  margin-bottom: 0; }
