@@ -12,13 +12,12 @@ angular.module('whoamiApp')
                 myMin = null,
                 myMax = null,
                 myScale = null,
-                myFormat = null,
                 dialUp = 0,
                 dialDown = 0,
                 render = function () {
                     var options = {
                         'min': 0,
-                        'max': 100,
+                        'max': 30,
                         'step': 1,
                         'default': 0,
                         'myValue': 0,
@@ -26,10 +25,6 @@ angular.module('whoamiApp')
                         'myMax': null,
                         // convert to model value
                         'myScale': function (v) {
-                            return v;
-                        },
-                        // convert to view string
-                        'myFormat': function (v) {
                             return v;
                         },
                     };
@@ -65,28 +60,9 @@ angular.module('whoamiApp')
                         };
                     }
 
-                    // set myFormat function
-                    if (angular.isFunction(options.myFormat)) {
-                        myFormat = options.myFormat
-                    } else if (angular.isString(options.myFormat)) {
-                        try {
-                            myFormat = eval(options.myFormat);
-                        } catch (e) {
-                            // do nothing;
-                        }
-                    }
-
-                    if (angular.isFunction(myFormat)) {
-                        options.myFormat = myFormat;
-                    } else {
-                        options.myFormat = myFormat = function (v) {
-                            return v;
-                        };
-                    }
-
                     // initialize the myValue, myMin and myMax
-                    if (angular.isNumber(options.mValue)) {
-                        myValue = myScale(options.mValue);
+                    if (angular.isNumber(options.myValue)) {
+                        myValue = options.myValue;
                     } else {
                         myValue = 0;
                     }
@@ -133,21 +109,20 @@ angular.module('whoamiApp')
                         oldCursorValue = cv;
 
                         scope.$apply(function () {
-                            ngModel.$modelValue = myValue;
-                            ngModel.$setViewValue(myFormat(myValue));
+                            ngModel.$setTouched();
+                            ngModel.$setDirty();
+                            ngModel.$setViewValue(myValue);
+                            ngModel.$commitViewValue();
                         });
                     };
 
+                    // config knob
                     $(iElement).trigger('configure', options);
-
-                    ngModel.$modelValue = myValue;
-                    ngModel.$setViewValue(myFormat(myValue));
-
                     $(iElement).val(options.default).trigger('change');
                 };
 
             scope.$watch(iAttributes.myKnob, function () {
-                $log.debug('myKnob changed');
+                $log.debug('myKnob options changed');
                 render();
             }, true);
 

@@ -88,20 +88,16 @@ angular.module('whoamiApp')
                     'shortText': 'Age',
                     'longText': 'How old is the child?',
                     'options': {
-                        'min': 0,
-                        'max': 12,
-                        'step': 1,
-                        'default': 0,
                         'myValue': 24,
                         'myMin': 0,
                         'myMax': 60,
                         'myScale' : function (v) {
                             return v;
                         },
-                        'myformat' : function (v) {
+                        'myFormat' : function (v) {
                             var y = parseInt(v/12);
                             var m = v - y * 12;
-                            return (y>0 ? y + 'yr' : '') + (m>0 ? m + 'm' : '');
+                            return (v > 0 ? (y>0 ? y + 'yr' : '') + (m>0 ? m + 'm' : '') : '0m');
                         },
                     },
                     'next': function (value) {
@@ -119,20 +115,14 @@ angular.module('whoamiApp')
                     'shortText': 'Height',
                     'longText': 'The child\'s height is',
                     'options': {
-                        'min': 0,
-                        'max': 100,
-                        'step': 1,
-                        'default': 0,
                         'myValue': 60,
                         'myMin': 40,
                         'myMax': 80,
                         'myScale' : function (v) {
                             return v * 0.5;
                         },
-                        'myformat' : function (v) {
-                            var y = parseInt(v/12);
-                            var m = v - y * 12;
-                            return (y>0 ? y + 'yr' : '') + (m>0 ? m + 'm' : '');
+                        'myFormat' : function (v) {
+                            return (Math.floor(v) < v ? v : v + '.0') + 'cm';
                         },
                     },
                     'next': function (value) {
@@ -145,6 +135,33 @@ angular.module('whoamiApp')
                         };
                     },
                 },
+                'step_five': {
+                    'title': 'STEP FIVE',
+                    'shortText': 'Weight',
+                    'longText': 'The child\'s weight is',
+                    'options': {
+                        'myValue': 5000,
+                        'myMin': 1500,
+                        'myMax': 13000,
+                        'myScale' : function (v) {
+                            return v * 100;
+                        },
+                        'myFormat' : function (v) {
+                            v = v / 1000;
+                            return (Math.floor(v) < v ? v : v + '.0') + 'kg';
+                        },
+                    },
+                    'next': function (value) {
+                        return 'diagnose';
+                    },
+                    'state': function (value) {
+                        return {
+                            to: 'app.step.knob',
+                            params: {step: 'step_five'},
+                        };
+                    },
+                },
+
             }
         };
 

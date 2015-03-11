@@ -8,9 +8,10 @@
                 {{meta.longText}}
                 <br />
                 <br />
+                <br />
 
                 <div style="margin-bottom: 0.4em; text-align:center;font-weight: bold; font-size: 2.5em; color: rgb(135, 206, 235);">
-                    {{result}}
+                    {{myFormat(result)}}
                 </div>
                 <div style="text-align:center;z-order:101;-webkit-transform: translatez(0);">
                     <span ng-model="result" my-knob="meta.options" ng-click="next(result)" data-width="180" data-cursor=true data-thickness=".3">OK</span>

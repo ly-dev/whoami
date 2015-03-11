@@ -2,7 +2,7 @@
 
 angular.module('whoamiApp')
 
-.controller('StepCtrl', ['$scope', '$log', '$state',  '$ionicPopup', 'MySteps',
+.controller('StepCtrl', ['$scope', '$log', '$state', '$ionicPopup', 'MySteps',
     function ($scope, $log, $state, $ionicPopup, mySteps) {
         $scope.hasPreviousStep = mySteps.hasPreviousStep;
 
@@ -40,6 +40,15 @@ angular.module('whoamiApp')
 .controller('KnobCtrl', ['$scope', '$log', 'MySteps',
     function ($scope, $log, mySteps) {
         $scope.meta = mySteps.getCurrentStepTemplate();
+
+        // set myFormat function
+        $scope.myFormat = function (v) {
+            return v;
+        };
+        if (angular.isFunction($scope.meta.options.myFormat)) {
+            $scope.myFormat = $scope.meta.options.myFormat
+        }
+
         $scope.result = $scope.meta.options.myValue;
         $scope.next = mySteps.next;
     }]);
