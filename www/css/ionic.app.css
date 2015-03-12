@@ -7592,6 +7592,9 @@ a.button {
   transition-duration: 0s; }
 
 /* Adjustment for Ionic */
+body {
+  background-color: white; }
+
 .app-adjust-popup .popup-body {
   overflow: hidden; }
 

@@ -24,6 +24,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 
 /* Adjustment for Ionic */
+body {
+    background-color: white;
+}
+
 .app-adjust-popup .popup-body {
     overflow: hidden;
 }
