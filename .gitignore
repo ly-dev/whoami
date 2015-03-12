@@ -8,4 +8,4 @@ platforms/
 plugins/
 
 www/lib/
-www/css/ionic.app.mini.css
+www/css/ionic.app.min.css

@@ -597,12 +597,12 @@ angular.module('whoamiApp')
         service.getInitialHeight = function (gender, age) {
             var table = determineTable(gender, age);
             var keys = Object.keys(table);
-            return keys[Math.floor(keys.length / 2)];
+            return parseFloat(keys[Math.floor(keys.length / 2)]);
         };
 
         service.getInitialWeight = function (gender, age, height) {
             var weights = determineWeights(gender, age, height);
-            return weights[3];
+            return parseFloat(weights[3]);
         };
 
         service.getZScore = function (gender, age, height, weight) {
@@ -814,7 +814,7 @@ angular.module('whoamiApp')
                     'options': {
                         'myValue': function () {
                             if (result['height']) {
-                                return result['height'];
+                                return result['height']);
                             }
 
                             return myDiagnose.getInitialHeight (result['gender'], result['age']);
