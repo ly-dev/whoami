@@ -11,8 +11,8 @@ angular.module('whoamiApp', [
     DEBUG: true,
 })
 
-.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$logProvider', 'MY_PARAMS',
-    function ($stateProvider, $urlRouterProvider, $locationProvider, $logProvider, MY_PARAMS) {
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$logProvider', '$ionicConfigProvider', 'MY_PARAMS',
+    function ($stateProvider, $urlRouterProvider, $locationProvider, $logProvider, $ionicConfigProvider, MY_PARAMS) {
 
         $urlRouterProvider
             .otherwise('/briefing/introduction');
@@ -21,6 +21,9 @@ angular.module('whoamiApp', [
 
         // disable debug log for production
         $logProvider.debugEnabled(MY_PARAMS.DEBUG);
+
+        // disable ionic cache globally
+        $ionicConfigProvider.views.maxCache(0);
     }])
 
 .run(['$ionicPlatform',

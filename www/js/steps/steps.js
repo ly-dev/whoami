@@ -28,9 +28,9 @@ angular.module('whoamiApp')
             controller: 'DiagnoseCtrl'
         })
 
-        .state('app.proposal', {
-            url: '/proposal',
-            templateUrl: 'js/steps/proposal.html',
-            controller: 'ProposalCtrl'
+        .state('app.summary', {
+            url: '/summary',
+            templateUrl: 'js/steps/summary.html',
+            controller: 'SummaryCtrl'
         });
     });

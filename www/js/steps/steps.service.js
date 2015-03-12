@@ -599,6 +599,10 @@ angular.module('whoamiApp')
             return weights[3];
         };
 
+        service.getZScore = function (gender, age, height, weight) {
+            return determineZScore(gender, age, height, weight / 1000);
+        };
+
         service.getReport = function (data) {
             var index = 0;
 
@@ -657,7 +661,7 @@ angular.module('whoamiApp')
         var initialized = false,
             template = {},
             startStep = 'introduction',
-            previousStep = [],
+            previousSteps = [],
             currentStep = 'introduction',
             result = {},
 
@@ -711,8 +715,11 @@ angular.module('whoamiApp')
                             },
                         ],
                     ],
+                    'summary': function (value) {
+                        return (value == 1 ? 'Found oedema of both feet' : 'Not found oedema of both feet');
+                    },
                     'next': function (value) {
-                        return 'gender';
+                        return (value == 1 ? 'summary' : 'gender');
                     },
                     'state': function (value) {
                         return {
@@ -739,6 +746,9 @@ angular.module('whoamiApp')
                             },
                         ],
                     ],
+                    'summary': function (value) {
+                        return (value == 'boy' ? 'Boy' : 'Girl');
+                    },
                     'next': function (value) {
                         return 'age';
                     },
@@ -768,6 +778,11 @@ angular.module('whoamiApp')
                             return (v > 0 ? (y > 0 ? y + 'yr' : '') + (m > 0 ? m + 'm' : '') : '0m');
                         },
                     },
+                    'summary': function (value) {
+                        var y = parseInt(value / 12);
+                        var m = value - y * 12;
+                        return (value > 0 ? (y > 0 ? y + ' year ' : '') + (m > 0 ? m + ' month' : '') : '0 month') + ' old';
+                    },
                     'next': function (value) {
                         return 'height';
                     },
@@ -785,7 +800,9 @@ angular.module('whoamiApp')
                     'shortText': 'Height',
                     'longText': 'The child\'s height is',
                     'options': {
-                        'myValue': 80,
+                        'myValue': function () {
+                            return (result['age'] > 24 ? 80 : 60);
+                        },
                         'myMin': 45,
                         'myMax': 120,
                         'myScale': function (v) {
@@ -794,6 +811,9 @@ angular.module('whoamiApp')
                         'myFormat': function (v) {
                             return (Math.floor(v) < v ? v : v + '.0') + 'cm';
                         },
+                    },
+                    'summary': function (value) {
+                        return value + 'cm tall';
                     },
                     'next': function (value) {
                         return 'weight';
@@ -812,7 +832,10 @@ angular.module('whoamiApp')
                     'shortText': 'Weight',
                     'longText': 'The child\'s weight is',
                     'options': {
-                        'myValue': 16000,
+                        'myValue': function () {
+                            var weight = myDiagnose.getInitialWeight(result['gender'], result['age'], result['height']);
+                            return weight * 1000;
+                        },
                         'myMin': 1900,
                         'myMax': 30100,
                         'myScale': function (v) {
@@ -823,8 +846,12 @@ angular.module('whoamiApp')
                             return (Math.floor(v) < v ? v : v + '.0') + 'kg';
                         },
                     },
+                    'summary': function (value) {
+                        return value / 1000 + 'kg weight';
+                    },
                     'next': function (value) {
-                        return 'muac';
+                        var zscore = myDiagnose.getZScore(result['gender'], result['age'], result['height'], result['weight']);
+                        return (zscore < -3 ? 'rutf' : 'muac');
                     },
                     'state': function (value) {
                         return {
@@ -849,8 +876,11 @@ angular.module('whoamiApp')
                             return v + 'cm';
                         },
                     },
+                    'summary': function (value) {
+                        return value + 'cm MUAC';
+                    },
                     'next': function (value) {
-                        return 'rutf';
+                        return (value > 115 ? 'summary' : 'rutf');
                     },
                     'state': function (value) {
                         return {
@@ -877,8 +907,11 @@ angular.module('whoamiApp')
                             },
                         ],
                     ],
+                    'summary': function (value) {
+                        return (value == 0 ? 'Not able to finish RUTF' : 'Able to finish RUTF');
+                    },
                     'next': function (value) {
-                        return 'mcp';
+                        return (value == 0 ? 'summary' : 'mcp');
                     },
                     'state': function (value) {
                         return {
@@ -905,8 +938,11 @@ angular.module('whoamiApp')
                             },
                         ],
                     ],
+                    'summary': function (value) {
+                        return (value == 0 ? 'No medical complication present' : 'Medical complication present');
+                    },
                     'next': function (value) {
-                        return 'bfp';
+                        return (value == 1 ? 'summary' : 'bfp');
                     },
                     'state': function (value) {
                         return {
@@ -933,8 +969,11 @@ angular.module('whoamiApp')
                             },
                         ],
                     ],
+                    'summary': function (value) {
+                        return (value == 0 ? 'No breastfeeding problem' : 'Breastfeeding problem');
+                    },
                     'next': function (value) {
-                        return 'diagnose';
+                        return 'summary';
                     },
                     'state': function (value) {
                         return {
@@ -942,6 +981,18 @@ angular.module('whoamiApp')
                             params: {
                                 step: 'bfp'
                             },
+                        };
+                    },
+                },
+                'summary': {
+                    'title': 'Summary',
+                    'shortText': 'Collected Information',
+                    'next': function (value) {
+                        return 'diagnose';
+                    },
+                    'state': function (value) {
+                        return {
+                            to: 'app.summary',
                         };
                     },
                 },
@@ -959,7 +1010,7 @@ angular.module('whoamiApp')
 
 
         service.hasPreviousStep = function () {
-            return (previousStep.length > 0);
+            return (previousSteps.length > 0);
         };
 
         service.getCurrentStepTemplate = function () {
@@ -971,26 +1022,34 @@ angular.module('whoamiApp')
         };
 
         // Restart all steps
-        service.restart = function () {
-            previousStep = [];
+        service.restart = function (skipIntro) {
+            previousSteps = [];
             currentStep = startStep;
-            result = [];
-            switchState(currentStep, null);
+            result = {};
+            if (skipIntro) {
+                service.next();
+            } else {
+                switchState(currentStep, null);
+            }
         };
 
         // Switch to previous step state
         service.prev = function () {
-            if (previousStep.length > 0) {
-                currentStep = previousStep.pop();
-                var value = (previousStep.length > 0 ? result[previousStep[previousStep.length - 1]] : null);
+            if (previousSteps.length > 0) {
+                currentStep = previousSteps.pop();
+                var value = (previousSteps.length > 0 ? result[previousSteps[previousSteps.length - 1]] : null);
                 switchState(currentStep, value);
             }
         };
 
         // keep value and switch to next step state
         service.next = function (value) {
-            result[currentStep] = value;
-            previousStep.push(currentStep);
+
+            if (value != null) {
+                result[currentStep] = value;
+            }
+
+            previousSteps.push(currentStep);
             currentStep = template[currentStep].next(value);
 
             switchState(currentStep, value);
@@ -1003,6 +1062,18 @@ angular.module('whoamiApp')
         service.getReport = function () {
             return myDiagnose.getReport(result);
         }
+
+        service.getStepSummary = function (step) {
+            var func = function (value, key) {
+                return key + ' = ' + value;
+            };
+
+            if (template[step] && template[step]['summary'] && angular.isFunction(template[step]['summary'])) {
+                func = template[step]['summary'];
+            }
+
+            return func;
+        };
 
         return service;
     }]);

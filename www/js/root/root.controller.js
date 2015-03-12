@@ -13,16 +13,43 @@ angular.module('whoamiApp')
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
                     {
-                        text: '<b>Share</b> This'
+                        text: 'About'
                     },
                     {
-                        text: 'Move'
+                        text: 'Back to Application'
+                    },
+                    {
+                        text: 'Quit Application'
                     }
-     ],
-                destructiveText: 'Delete',
-                titleText: 'Modify your album',
+                ],
                 buttonClicked: function (index) {
-                    return true;
+                    switch (index) {
+                    case 0:
+                        hideSheet();
+                        break;
+                    case 1:
+                        hideSheet();
+                        break;
+                    case 2:
+                        hideSheet();
+                        var confirmPopup = $ionicPopup.confirm({
+                            title: 'Please Confirm',
+                            cssClass: 'app-adjust-popup',
+                            template: 'Are you sure to quit?'
+                        });
+                        confirmPopup.then(function (res) {
+                            if (res) {
+                                if (navigator.app != null) {
+                                    if (confirm("Are you sure to quit?")) {
+                                        navigator.app.exitApp();
+                                    }
+                                }
+                            }
+                        });
+                        break;
+
+                        return true;
+                    }
                 }
             });
 
@@ -45,4 +72,4 @@ angular.module('whoamiApp')
             });
         };
 
-    }])
+                }])

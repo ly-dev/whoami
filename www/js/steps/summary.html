@@ -4,14 +4,11 @@
             <div class="item item-divider">
                 {{meta.shortText}}
             </div>
-            <div class="item item-thumbnail-left item-text-wrap">
-                <img src="img/who_logo.gif"> {{report.conclusion}}
-            </div>
-            <div class="item item-text-wrap" ng-bind-html="report.action">
+            <div class="item item-text-wrap" ng-bind-html="summary">
             </div>
             <div class=" item">
                 <div class="button-bar ">
-                    <a class="button button-positive " ng-click="next() ">Next child</a>
+                    <a class="button button-positive " ng-click="next() ">Diagnose</a>
                 </div>
             </div>
         </div>

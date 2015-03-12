@@ -35,7 +35,7 @@ angular.module('whoamiApp')
 
                         if (angular.isObject(temp)) {
                             options = angular.extend(options, temp)
-                            // $log.debug('myKnob new options: ' + angular.toJson(temp));
+                                // $log.debug('myKnob new options: ' + angular.toJson(temp));
                         } else {
                             throw 'Invalid knob options attribute';
                         }
@@ -61,19 +61,25 @@ angular.module('whoamiApp')
                     }
 
                     // initialize the myValue, myMin and myMax
-                    if (angular.isNumber(options.myValue)) {
+                    if (angular.isFunction(options.myValue)) {
+                        myValue = options.myValue();
+                    } else if (angular.isNumber(options.myValue)) {
                         myValue = options.myValue;
                     } else {
                         myValue = 0;
                     }
 
-                    if (angular.isNumber(options.myMin)) {
+                    if (angular.isFunction(options.myMin)) {
+                        myValue = options.myMin();
+                    } else if (angular.isNumber(options.myMin)) {
                         myMin = options.myMin;
                     } else {
                         myMin = null;
                     }
 
-                    if (angular.isNumber(options.myMax)) {
+                    if (angular.isFunction(options.myMax)) {
+                        myValue = options.myMax();
+                    } else if (angular.isNumber(options.myMax)) {
                         myMax = options.myMax;
                     } else {
                         myMax = null;

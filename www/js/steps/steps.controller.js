@@ -28,7 +28,26 @@ angular.module('whoamiApp')
             $scope.myFormat = $scope.meta.options.myFormat
         }
 
-        $scope.result = $scope.meta.options.myValue;
+        $scope.result = (angular.isFunction($scope.meta.options.myValue) ? $scope.meta.options.myValue() : $scope.meta.options.myValue);
+        $scope.next = mySteps.next;
+    }])
+
+.controller('SummaryCtrl', ['$scope', '$log', 'MySteps',
+    function ($scope, $log, mySteps) {
+        $scope.meta = mySteps.getCurrentStepTemplate();
+        var summary = '';
+
+        angular.forEach(mySteps.getResult(), function(value, key) {
+            var func = mySteps.getStepSummary(key);
+            summary += '<li>' + func (value, key) + '</li>';
+        });
+
+        if (summary.length > 0) {
+            summary = '<ul class="diagnose-action">' + summary + '</ul>';
+        }
+
+        $scope.summary = summary;
+
         $scope.next = mySteps.next;
     }])
 
@@ -49,6 +68,6 @@ angular.module('whoamiApp')
         $log.debug(angular.toJson($scope.report));
 
         $scope.next = function () {
-            mySteps.restart();
+            mySteps.restart(true);
         };
     }]);
