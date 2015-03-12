@@ -1,14 +1,14 @@
 <ion-view view-title="{{meta.title}}">
     <ion-content>
         <div class="card">
-            <div class="item item-divider">
+            <div id="shortText" class="item item-divider">
                 {{meta.shortText}}
             </div>
-            <div class="item item-text-wrap" ng-bind-html="summary">
+            <div id="summary" class="item item-text-wrap" ng-bind-html="summary">
             </div>
             <div class=" item">
                 <div class="button-bar ">
-                    <a class="button button-positive " ng-click="next() ">Diagnose</a>
+                    <a id="button-diagnose" class="button button-positive " ng-click="next() ">Diagnose</a>
                 </div>
             </div>
         </div>

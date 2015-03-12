@@ -594,6 +594,12 @@ angular.module('whoamiApp')
             };
 
 
+        service.getInitialHeight = function (gender, age) {
+            var table = determineTable(gender, age);
+            var keys = Object.keys(table);
+            return keys[Math.floor(keys.length / 2)];
+        };
+
         service.getInitialWeight = function (gender, age, height) {
             var weights = determineWeights(gender, age, height);
             return weights[3];
@@ -766,7 +772,13 @@ angular.module('whoamiApp')
                     'shortText': 'Age',
                     'longText': 'How old is the child?',
                     'options': {
-                        'myValue': 24,
+                        'myValue': function () {
+                            if (result['age']) {
+                                return result['age'];
+                            }
+
+                            return 24;
+                        },
                         'myMin': 0,
                         'myMax': 60,
                         'myScale': function (v) {
@@ -801,7 +813,11 @@ angular.module('whoamiApp')
                     'longText': 'The child\'s height is',
                     'options': {
                         'myValue': function () {
-                            return (result['age'] > 24 ? 80 : 60);
+                            if (result['height']) {
+                                return result['height'];
+                            }
+
+                            return myDiagnose.getInitialHeight (result['gender'], result['age']);
                         },
                         'myMin': 45,
                         'myMax': 120,
