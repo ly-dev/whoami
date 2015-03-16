@@ -2,8 +2,8 @@
 
 angular.module('whoamiApp')
 
-.factory('MyDiagnose', ['$q', '$log', 'MY_PARAMS',
-    function ($q, $log, MY_PARAMS) {
+.factory('MyDiagnose', ['$q', '$log', 'APP_PARAMS',
+    function ($q, $log, APP_PARAMS) {
         var zscoreTabls = {},
             conclusions = [],
             initialized = false,
@@ -662,8 +662,8 @@ angular.module('whoamiApp')
 
 }])
 
-.factory('MySteps', ['$q', '$log', '$state', 'MY_PARAMS', 'MyDiagnose',
-    function ($q, $log, $state, MY_PARAMS, myDiagnose) {
+.factory('MySteps', ['$q', '$log', '$state', 'APP_PARAMS', 'MyDiagnose',
+    function ($q, $log, $state, APP_PARAMS, myDiagnose) {
         var initialized = false,
             template = {},
             startStep = 'introduction',
@@ -692,7 +692,7 @@ angular.module('whoamiApp')
                 'introduction': {
                     'title': 'WHOAMI',
                     'shortText': 'Introduction',
-                    'longText': 'This app will collect data and give diagnostic proposal according to the World Health Organization Acute Malnutrition guide.',
+                    'longText': 'The app will collect data and give diagnostic proposal according to the World Health Organization Acute Malnutrition guide.',
                     'next': function (value) {
                         return 'oedema';
                     },
@@ -814,7 +814,7 @@ angular.module('whoamiApp')
                     'options': {
                         'myValue': function () {
                             if (result['height']) {
-                                return result['height']);
+                                return result['height'];
                             }
 
                             return myDiagnose.getInitialHeight (result['gender'], result['age']);
