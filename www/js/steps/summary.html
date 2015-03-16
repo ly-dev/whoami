@@ -4,7 +4,10 @@
             <div id="shortText" class="item item-divider">
                 {{meta.shortText}}
             </div>
-            <div id="summary" class="item item-text-wrap" ng-bind-html="summary">
+            <div id="summary" class="item item-text-wrap">
+                <div my-bar="heightBarOptions"></div>
+                <div my-bar="weightBarOptions"></div>
+                <div ng-bind-html="summary"></div>
             </div>
             <div class=" item">
                 <div class="button-bar ">

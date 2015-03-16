@@ -2,6 +2,79 @@
 
 angular.module('whoamiApp')
 
+.directive('myBar', ['$window', '$log', function ($window, $log) {
+    return {
+        restrict: 'A',
+        link: function (scope, iElement, iAttributes) {
+            var id = 'bar-' + Date.now(),
+                render = function () {
+                    var barWidth = iElement.width(),
+                        grades = [0, 0.1, 0.25, 0.75, 0.9, 1],
+                        options = {
+                            range: [0,10,25,75,90,100],
+                            value: 50,
+                            text: 'value: 50'
+                        },
+                        markX = 10;
+
+                    if (!angular.isUndefined(iAttributes.myBar)) {
+                        var temp = scope.$eval(iAttributes.myBar);
+                        // $log.debug('myBar set options: ' + angular.toJson(temp));
+
+                        if (angular.isObject(temp)) {
+                            options = angular.extend(options, temp)
+                                // $log.debug('myBar new options: ' + angular.toJson(temp));
+                        } else {
+                            throw 'Invalid bar options attribute';
+                        }
+                    }
+
+                    var i;
+                    for (i=0; i<options.range.length; i++) {
+                        if (options.value <= options.range[i]) {
+                            break;
+                        }
+                    };
+
+                    if (i < options.range.length) {
+                        if (i == 0) {
+                            markX = 0
+                        } else {
+                            markX = barWidth /2 * (grades[i] + grades[i-1]);
+                        }
+                    } else {
+                        markX = barWidth;
+                    }
+
+                    var barHtml = '<svg width="100%" height="40">'
+                        + '    <defs>'
+                        + '        <linearGradient id="grad-' + id + '" x1="0%" y1="0%" x2="100%" y2="0%">'
+                        + '            <stop offset="0%" style="stop-color:rgb(255,0,0);stop-opacity:1" />'
+                        + '            <stop offset="10%" style="stop-color:rgb(255,255,0);stop-opacity:1" />'
+                        + '            <stop offset="25%" style="stop-color:rgb(0,255,0);stop-opacity:1" />'
+                        + '            <stop offset="75%" style="stop-color:rgb(0,255,0);stop-opacity:1" />'
+                        + '            <stop offset="90%" style="stop-color:rgb(255,255,0);stop-opacity:1" />'
+                        + '            <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />'
+                        + '        </linearGradient>'
+                        + '    </defs>'
+                        + '    <rect x="0" y="0" width="100%" height="20" style="fill:url(#grad-' + id + ');stroke-width:1;stroke:rgb(0,0,0)" />'
+                        + '    <polygon points="' + markX + ',20 ' + (markX-5) + ',30 ' + (markX+5) + ',30" style="fill:rgb(0,0,0);stroke:rgb(0,0,0);stroke-width:1" />'
+                        + '    <text fill="#000000" font-size="12" x="40%" y="15">' + (options.text) + '</text>'
+                        + '</svg>';
+
+
+                    iElement.html(barHtml);
+                };
+
+
+            scope.$watch(iAttributes.myBar, function () {
+                // $log.debug('myBar options changed');
+                render();
+            }, true);
+        }
+    };
+}])
+
 .directive('myKnob', ['$log', function ($log) {
     return {
         restrict: 'A',

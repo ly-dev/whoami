@@ -35,18 +35,11 @@ angular.module('whoamiApp')
 .controller('SummaryCtrl', ['$scope', '$log', 'MySteps',
     function ($scope, $log, mySteps) {
         $scope.meta = mySteps.getCurrentStepTemplate();
-        var summary = '';
 
-        angular.forEach(mySteps.getResult(), function(value, key) {
-            var func = mySteps.getStepSummary(key);
-            summary += '<li>' + func (value, key) + '</li>';
-        });
+        $scope.summary = mySteps.getSummary();
 
-        if (summary.length > 0) {
-            summary = '<ul class="diagnose-action">' + summary + '</ul>';
-        }
-
-        $scope.summary = summary;
+        $scope.heightBarOptions = mySteps.getHeightBarOptions();
+        $scope.weightBarOptions = mySteps.getWeightBarOptions();
 
         $scope.next = mySteps.next;
     }])
