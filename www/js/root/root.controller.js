@@ -32,20 +32,13 @@ angular.module('whoamiApp')
                         break;
                     case 2:
                         hideSheet();
-                        var confirmPopup = $ionicPopup.confirm({
-                            title: 'Please Confirm',
-                            cssClass: 'app-adjust-popup',
-                            template: 'Are you sure to quit?'
-                        });
-                        confirmPopup.then(function (res) {
-                            if (res) {
-                                if (navigator.app != null) {
-                                    if (confirm("Are you sure to quit?")) {
-                                        navigator.app.exitApp();
-                                    }
+                        if (res) {
+                            if (navigator.app != null) {
+                                if (confirm("Are you sure to quit?")) {
+                                    navigator.app.exitApp();
                                 }
                             }
-                        });
+                        };
                         break;
 
                         return true;

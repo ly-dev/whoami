@@ -10,7 +10,7 @@
                 <br/>
             </div>
             <div ng-repeat="optionRow in meta.options" class="button-bar">
-                <a ng-repeat="optionItem in optionRow" id="button-option-{{optionItem.key}}" class="button button-stable" ng-click="next(optionItem.key)">{{optionItem.value}}</a>
+                <a ng-repeat="optionItem in optionRow" id="button-option-{{optionItem.key}}" class="button button-stable" ng-click="next(optionItem.key)" ng-bind-html="optionItem.value"></a>
             </div>
         </div>
     </ion-content>
