@@ -1,24 +1,27 @@
 {
-    "name": "WHOAMI",
-    "version": "0.0.1",
-    "description": "World Health Organization Acute Malnutrition Investigation",
-    "dependencies": {
-        "gulp": "^3.5.6",
-        "gulp-sass": "^0.7.1",
-        "gulp-concat": "^2.2.0",
-        "gulp-minify-css": "^0.3.0",
-        "gulp-rename": "^1.2.0"
-    },
-    "devDependencies": {
-        "bower": "^1.3.3",
-        "gulp-util": "^2.2.14",
-        "protractor": "^1.8.0",
-        "shelljs": "^0.3.0"
-    },
-    "scripts": {
-        "serve": "ionic serve",
-        "serve:test": "npm run serve -- --address localhost --port 3000 --browser",
-        "e2e": "protractor test/protractor.config.js",
-        "pree2e": "npm run serve:test&"
-    }
+  "name": "WHOAMI",
+  "version": "0.0.1",
+  "description": "World Health Organization Acute Malnutrition Investigation",
+  "dependencies": {
+    "gulp": "^3.5.6",
+    "gulp-sass": "^0.7.1",
+    "gulp-concat": "^2.2.0",
+    "gulp-minify-css": "^0.3.0",
+    "gulp-rename": "^1.2.0"
+  },
+  "devDependencies": {
+    "gulp-util": "^2.2.14",
+    "protractor": "^1.8.0",
+    "shelljs": "^0.3.0"
+  },
+  "scripts": {
+    "serve": "ionic serve",
+    "serve:test": "npm run serve -- --address localhost --port 3000 --browser",
+    "e2e": "protractor test/protractor.config.js",
+    "pree2e": "npm run serve:test&"
+  },
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
